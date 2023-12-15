@@ -1,0 +1,154 @@
+q1- create user Etud identified by aymane;
+	alter user etud quota unlimited on users;
+
+q2-grant all privileges to etud;
+
+q4-create table etudiant( codeetudiant varchar(10) primary key, 
+						  nomeetudiant varchar(20), 
+						  prenometudiant varchar(20), 
+						  datanaissance date, 
+						  ville varchar(10));
+
+	create table cours(codecours varchar(10) primary key, 
+					   intitule varchar2(20), 
+					   nbheures number(2));
+
+	CREATE TABLE resultat (
+    codeetudiant VARCHAR2(10),
+    codecours VARCHAR2(10),
+    note NUMBER(5,2),
+    PRIMARY KEY(codeetudiant, codecours),
+    CONSTRAINT fk_codeetudiant FOREIGN KEY (codeetudiant) REFERENCES etudiant(codeetudiant),
+    CONSTRAINT fk_codecours FOREIGN KEY (codecours) REFERENCES cours(codecours)
+	);
+
+	create table enseignant(codeenseignant varchar(10) primary key,
+						    nomenseignant varchar(20),
+						    prenomenseignant varchar(20), 
+						    specialite varchar(20));
+
+	create table charge( 
+						codecours varchar(10), codeenseignant varchar(10), primary key(codecours, codeenseignant), CONSTRAINT fk_codecour FOREIGN KEY (codecours) REFERENCES cours(codecours),CONSTRAINT fk_codeenseignant FOREIGN KEY (codeenseignant) REFERENCES enseignant(codeenseignant));
+
+q5-
+--------------------------------------------------------------------------------------
+INSERT INTO etudiant (codeetudiant, nometudiant, prenometudiant, datenaissance, ville)
+ VALUES
+('E001', 'Dupont', 'Jean', TO_DATE('1990-01-15', 'YYYY-MM-DD'), 'Agadir');
+--------------------------------------------------------------------------------------
+INSERT INTO etudiant (codeetudiant, nometudiant, prenometudiant, datenaissance, ville)
+ VALUES
+('E002', 'Martin', 'Sophie', TO_DATE('1992-05-22', 'YYYY-MM-DD'), 'Marrakech'),
+--------------------------------------------------------------------------------------
+INSERT INTO etudiant (codeetudiant, nometudiant, prenometudiant, datenaissance, ville)
+ VALUES 
+ ('E002', 'Martin', 'Sophie', TO_DATE('1992-05-22', 'YYYY-MM-DD'), 'Marrakech');
+--------------------------------------------------------------------------------------
+INSERT INTO etudiant (codeetudiant, nometudiant, prenometudiant, datenaissance, ville)
+ VALUES
+ ('E003', 'Lefevre', 'Pierre', TO_DATE ('1988-11-03', 'YYYY-MM-DD'), 'casa');
+--------------------------------------------------------------------------------------
+INSERT INTO etudiant (codeetudiant, nometudiant, prenometudiant, datenaissance, ville)
+value 
+('E004', 'Leclerc', 'Marie', TO_DATE('1995-07-18', 'YYYY-MM-DD'), 'fes');
+--------------------------------------------------------------------------------------
+INSERT INTO etudiant (codeetudiant, nometudiant, prenometudiant, datenaissance, ville)
+VALUES 
+('E005', 'Dubois', 'Alice', TO_DATE('1993-09-28', 'YYYY-MM-DD'), 'Errachidia');
+
+--------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------
+INSERT INTO Resultat (codeEtudiant, codeCours, note) 2 VALUES ('E001', 'C0001', 85.5);
+
+INSERT INTO Resultat (codeEtudiant, codeCours, note) 2 VALUES ('E002', 'C0002', 45);
+
+INSERT INTO Resultat (codeEtudiant, codeCours, note) 2 VALUES ('E003', 'C0003', 34);
+
+INSERT INTO Resultat (codeEtudiant, codeCours, note) 2 VALUES ('E004', 'C0004', 89);
+
+INSERT INTO Resultat (codeEtudiant, codeCours, note) 2 VALUES ('E005', 'C0005', 100);
+
+--------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------
+ INSERT INTO Cours (codeCours, intitule, nbHeures) 2 VALUES ('C0001', 'Mathematics', 60);
+
+ INSERT INTO Cours (codeCours, intitule, nbHeures) 2 VALUES ('C0002', 'Physics', 45);
+
+ INSERT INTO Cours (codeCours, intitule, nbHeures) 2 VALUES ('C0003', 'Computer Science', 75);
+
+ INSERT INTO Cours (codeCours, intitule, nbHeures) 2 VALUES ('C0004', 'JAVA', 23);
+
+ INSERT INTO Cours (codeCours, intitule, nbHeures) 2 VALUES ('C0005', 'BD', 48);
+
+--------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------
+ INSERT INTO Charge (codeCours, codeEnseignant) 2 VALUES ('C0001', 'ENS001');
+
+ INSERT INTO Charge (codeCours, codeEnseignant) 2 VALUES ('C0002', 'ENS002');
+
+ INSERT INTO Charge (codeCours, codeEnseignant) 2 VALUES ('C0003', 'ENS003');
+
+ INSERT INTO Charge (codeCours, codeEnseignant) 2 VALUES ('C0004', 'ENS002');
+
+ INSERT INTO Charge (codeCours, codeEnseignant) 2 VALUES ('C0005', 'ENS001');
+---------------------------------------------------------------------------------------
+ COMMIT;
+ --------------------------------------------------------------------------------------
+ INSERT INTO enseignant (codeenseignant, nomenseigant, prenomenseignant, specialite) 2 VALUES ('ENS001', 'Martin' 'Jean', 'Mathématiques');
+
+ INSERT INTO enseignant (codeenseignant, nomenseigant, prenomenseignant, specialite) 2 VALUES ('ENS002', 'Dupont', 'Sophie', 'Physique');
+
+ INSERT INTO enseignant (codeenseignant, nomenseigant, prenomenseignant, specialite) 2 VALUES ('ENS004', 'Lefevre', 'Pierre', 'Informatique');
+
+ INSERT INTO enseignant (codeenseignant, nomenseigant, prenomenseignant, specialite) 2 VALUES ('ENS003', 'Lefevre', 'Pierre', 'Informatique');
+
+ INSERT INTO enseignant (codeenseignant, nomenseigant, prenomenseignant, specialite) 2 VALUES ('ENS005', 'Lefevre', 'Pierre', 'Informatique');
+
+--------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------
+Q6)UPDATE RESULTAT SET NOTE = NOTE * 1.05;
+COMMIT;
+
+UPDATE COURS SET INTITULE = 'SGBD' WHERE CODECOURS = 'CO002';
+
+DELETE FROM RESULTAT WHERE CODECOURS = 'CO005';
+
+DELETE FROM CHARGE WHERE CODECOURS = 'CO005';
+
+ALTER TABLE COURS DISABLE CONSTRAINT constraint_name;
+--------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------
+Q7) 
+SELECT * FROM ETUDIANT;
+
+SELECT * FROM RESULTAT;
+
+SELECT * FROM COURS;
+
+SELECT * FROM CHARGE;
+
+SELECT * FROM ENSEIGNAT; 
+
+Q8)
+
+SELECT NOMETUDIANT, VILLE FROM ETUDIANT;
+
+Q9)
+SELECT NOMETUDIANT, VILLE FROM ETUDIANT ORDER BY NOMETUDIANT;
+
+Q10)
+SELECT NOMETUDIANT FROM ETUDIANT WHERE VILLE IN ('Agadir','Tiznit');
+
+Q11)
+SELECT NOMETUDIANT,VILLE FROM ETUDIANT WHERE VILLE IN ('Agadir','Tiznit','Taroudant') ORDER BY VILLE, NOMETUDIANT;
+
+Q12)
+SELECT NOMETUDIANT, DATENAISSANCE, VILLE FROM ETUDIANT ORDER BY VILLE, DATENAISSANCE DESC;
+
+Q13)
+SELECT NOM,DATENAISSANCE FROM ETUDIANT WHERE DATENAISSANCE BETWEEN '01-01-2002' AND '31-12-2005' ORDER BY DATENAISSANCE DESC;
+
+Q14)
+SELECT NOMETUDIANT, VILLE FROM ETUDIANT WHERE VILLE IN ('CASA','TAROUDANT','SAFI');
+
+Q15) SELECT NOMETUDIANT, VILLE FROM ETUDIANT WHERE NOMETUDIANT LIKE '%Ben%' OR NOMETUDIANT LIKE '%oui%';
